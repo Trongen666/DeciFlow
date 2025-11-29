@@ -1,78 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Web3 Supply Chain Tracker</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-
-<div class="container">
-
-  <header>
-    <h1>Web3 Supply Chain Tracker</h1>
-    <button id="connectButton">Connect Wallet</button>
-  </header>
-
-  <section class="info">
-    <p><strong>Wallet:</strong> <span id="walletAddress">Not connected</span></p>
-    <p><strong>Role:</strong> <span id="userRole">-</span></p>
-    <p><strong>Status:</strong> <span id="statusMessage">Waiting...</span></p>
-  </section>
-
-  <!-- Public Search -->
-  <section class="card">
-    <h2>Search Product</h2>
-    <input type="text" id="searchProductId" placeholder="Enter Product ID" />
-    <button id="searchButton">Search</button>
-
-    <div id="searchResult" class="result"></div>
-    <pre id="historyResult"></pre>
-  </section>
-
-  <!-- Manufacturer Dashboard -->
-  <section id="manufacturerDashboard" class="card hidden">
-    <h2>Manufacturer Panel</h2>
-
-    <form id="createProductForm">
-      <input type="text" id="createProductId" placeholder="Product ID" required>
-      <input type="text" id="createProductName" placeholder="Name" required>
-      <input type="text" id="createProductBatch" placeholder="Batch" required>
-      <input type="text" id="createProductSerial" placeholder="Serial" required>
-      <button type="submit">Create Product</button>
-    </form>
-
-    <hr>
-
-    <form id="transferProductForm">
-      <input type="text" id="transferProductId" placeholder="Product ID" required>
-      <input type="text" id="transferTo" placeholder="Receiver Wallet Address" required>
-      <button type="submit">Transfer Product</button>
-    </form>
-  </section>
-
-  <!-- Distributor Dashboard -->
-  <section id="distributorDashboard" class="card hidden">
-    <h2>Distributor Panel</h2>
-
-    <form id="transferProductForm">
-      <input type="text" id="transferProductId" placeholder="Product ID" required>
-      <input type="text" id="transferTo" placeholder="Next Wallet" required>
-      <button type="submit">Forward Product</button>
-    </form>
-  </section>
-
-  <!-- Customer Dashboard -->
-  <section id="customerDashboard" class="card hidden">
-    <h2>Verify Product</h2>
-    <input type="text" id="verifyProductId" placeholder="Enter Product ID" />
-    <button id="verifyButton">Verify</button>
-    <p id="verifyResult"></p>
-  </section>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.umd.min.js"></script>
-<script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>supply-chain-dapp</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
