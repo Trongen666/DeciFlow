@@ -9,6 +9,7 @@ contract SupplyChain {
         string serialNumber;
         address currentOwner;
         address[] history;
+        uint[] historyTimestamps;
     }
 
     mapping(uint => Product) public products;
@@ -53,7 +54,9 @@ contract SupplyChain {
         newProduct.name = _name;
         newProduct.serialNumber = _serial;
         newProduct.currentOwner = msg.sender;
-        newProduct.history.push(msg.sender);
+newProduct.history.push(msg.sender);
+newProduct.historyTimestamps.push(block.timestamp); // 👈 when manufacturer created it
+
 
         // Manufacturer's view: this product is currently in *their* warehouse
         statuses[msg.sender][newId] = "In Warehouse";
@@ -71,7 +74,9 @@ contract SupplyChain {
 
         // Update current owner
         products[_productId].currentOwner = _newOwner;
-        products[_productId].history.push(_newOwner);
+products[_productId].history.push(_newOwner);
+products[_productId].historyTimestamps.push(block.timestamp); // 👈 when new owner received it
+
 
         // Sender's view: product has been transferred out
         statuses[msg.sender][_productId] = "Transferred";
@@ -83,13 +88,15 @@ contract SupplyChain {
     }
 
     // --- READ HISTORY ---
-    function getProductHistory(uint _productId)
-        public
-        view
-        returns (address[] memory)
-    {
-        return products[_productId].history;
-    }
+function getProductHistory(uint _productId)
+    public
+    view
+    returns (address[] memory, uint[] memory)
+{
+    Product storage p = products[_productId];
+    return (p.history, p.historyTimestamps);
+}
+
 
     // --- READ PRODUCT + CALLER-SPECIFIC STATUS ---
     // NOTE: 5th return value is *status for msg.sender*
