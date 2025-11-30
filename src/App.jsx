@@ -2,7 +2,21 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "./utils/contractInfo";
 import "bootstrap/dist/css/bootstrap.min.css";
+// Show full address instead of shortening
+const shortenAddress = (addr) => (addr ? addr : "");
 
+
+const formatTimestamp = (ts) => {
+  if (!ts) return "";
+  const date = new Date(Number(ts) * 1000); // block.timestamp is in seconds
+  return date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+};
 function App() {
   // --- STATE VARIABLES ---
   const [account, setAccount] = useState(null);
@@ -109,18 +123,33 @@ function App() {
   };
 
   const trackProduct = async () => {
-    if (!contract) return;
-    try {
-      setStatus("Scanning Blockchain...");
-      const h = await contract.getProductHistory(trackId);
-      setHistory(h);
-      setStatus("Scan Complete.");
-    } catch (error) {
-      console.error(error);
-      alert("Product ID not found");
-      setHistory([]);
-    }
-  };
+  if (!contract) return;
+  try {
+    setStatus("Scanning Blockchain...");
+
+    // getProductHistory returns [addresses[], timestamps[]]
+    const [addresses, timestamps] = await contract.getProductHistory(trackId);
+
+    // Build detailed history with role + formatted timestamp
+    const detailed = await Promise.all(
+      addresses.map(async (addr, index) => {
+        const roleForAddr = await contract.roles(addr);
+        return {
+          address: addr,
+          role: roleForAddr && roleForAddr.length > 0 ? roleForAddr : "Unknown",
+          timestamp: timestamps[index],
+        };
+      })
+    );
+
+    setHistory(detailed); // 👈 history is now array of objects
+    setStatus("Scan Complete.");
+  } catch (error) {
+    console.error(error);
+    alert("Product ID not found");
+    setHistory([]);
+  }
+};
 
   // --- 3b. LOAD INVENTORY (MANUFACTURER) ---
   const loadMyInventory = async () => {
@@ -142,7 +171,8 @@ function App() {
         const productStatus = p[4];
 
         // Check creator: first address in history
-        const historyArr = await contract.getProductHistory(id);
+        const [historyArr] = await contract.getProductHistory(id); // 👈 take only addresses
+
         if (
           historyArr.length > 0 &&
           historyArr[0].toLowerCase() === account.toLowerCase()
@@ -184,7 +214,7 @@ function App() {
         const productStatus = p[4];
 
         // Check if this Distributor has EVER handled the product (history contains account)
-        const historyArr = await contract.getProductHistory(id);
+        const [historyArr] = await contract.getProductHistory(id); // 👈 take only addresses
         const managedByThisAccount = historyArr.some(
           (addr) => addr.toLowerCase() === account.toLowerCase()
         );
@@ -227,7 +257,7 @@ function App() {
         const productStatus = p[4];
 
         // Check if this Retailer has EVER handled the product (history contains account)
-        const historyArr = await contract.getProductHistory(id);
+        const [historyArr] = await contract.getProductHistory(id); // 👈 take only addresses
         const managedByThisAccount = historyArr.some(
           (addr) => addr.toLowerCase() === account.toLowerCase()
         );
@@ -273,10 +303,9 @@ function App() {
         <div className="container-fluid d-flex justify-content-between">
           <h4 className="m-0">📦 SupplyChain DApp</h4>
           <button className="btn btn-dark" onClick={connectWallet}>
-            {account
-              ? `${role}: ${account.substring(0, 6)}...`
-              : "Connect Wallet"}
-          </button>
+  {account ? `${role}: ${account}` : "Connect Wallet"}
+</button>
+
         </div>
       </nav>
 
@@ -448,14 +477,18 @@ function App() {
                   <div className="alert alert-white border mt-2">
                     <strong>📜 Chain of Custody:</strong>
                     <ul className="mb-0 mt-1 pl-3">
-                      {history.map((h, i) => (
-                        <li key={i} className="small text-break">
-                          Step {i + 1}: {h}
-                          {i === 0 && " (Factory)"}
-                          {i === history.length - 1 && " (Current Owner)"}
-                        </li>
-                      ))}
-                    </ul>
+  {history.map((h, i) => (
+    <li key={i} className="small text-break">
+      Step {i + 1}:{" "}
+      <strong>
+        {h.role} — {shortenAddress(h.address)}
+      </strong>{" "}
+      (Received on: {formatTimestamp(h.timestamp)})
+      {i === 0 }
+      {i === history.length - 1 }
+    </li>
+  ))}
+</ul>
                   </div>
                 )}
               </div>
@@ -565,13 +598,15 @@ function App() {
               {history.length > 0 && (
                 <div className="alert alert-success text-start">
                   <h5>✅ Authentic!</h5>
-                  <ul className="mb-0">
-                    {history.map((h, i) => (
-                      <li key={i} className="small text-break">
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
+                 <ul className="mb-0">
+  {history.map((h, i) => (
+    <li key={i} className="small text-break">
+      <strong>{h.role}</strong> — {shortenAddress(h.address)}{" "}
+      (Received on: {formatTimestamp(h.timestamp)})
+    </li>
+  ))}
+</ul>
+
                 </div>
               )}
             </div>
