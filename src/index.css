@@ -13,6 +13,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.hero {
+  background: linear-gradient(120deg, rgba(99,102,241,0.12), rgba(79,70,229,0.08));
+  padding: 48px;
+  border-radius: 12px;
+}
+
+.app-container .navbar-brand { font-weight: 700; letter-spacing: .4px; }
+
+.feature-card { border: 0; box-shadow: 0 6px 18px rgba(6,12,34,0.1); }
+
 a {
   font-weight: 500;
   color: #646cff;

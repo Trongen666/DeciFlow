@@ -30,18 +30,18 @@ describe("SupplyChain Smart Contract", function () {
     });
 
     it("Should allow Manufacturer to create a product", async function () {
-        await supplyChain.connect(manufacturer).createProduct(
-            "Test Product",
-            "SN-123",
-            "BATCH-1",
-            0, // DryGoods
-            100,
-            1000,
-            0,
-            false,
-            0,
-            0
-        );
+        await supplyChain.connect(manufacturer).createProduct({
+            name: "Test Product",
+            serialNumber: "SN-123",
+            batchNumber: "BATCH-1",
+            category: 0, // DryGoods
+            quantity: 100,
+            unitCost: 1000,
+            expiryDate: 0,
+            requiresTemperatureControl: false,
+            minTemperature: 0,
+            maxTemperature: 0
+        });
 
         const product = await supplyChain.getProduct(1);
         expect(product.name).to.equal("Test Product");
@@ -50,17 +50,35 @@ describe("SupplyChain Smart Contract", function () {
 
     it("Should fail if non-manufacturer tries to create product", async function () {
         await expect(
-            supplyChain.connect(other).createProduct(
-                "Fake Product", "SN-FAKE", "BATCH-X", 0, 100, 1000, 0, false, 0, 0
-            )
+            supplyChain.connect(other).createProduct({
+                name: "Fake Product",
+                serialNumber: "SN-FAKE",
+                batchNumber: "BATCH-X",
+                category: 0,
+                quantity: 100,
+                unitCost: 1000,
+                expiryDate: 0,
+                requiresTemperatureControl: false,
+                minTemperature: 0,
+                maxTemperature: 0
+            })
         ).to.be.revertedWith("Manufacturer only");
     });
 
     it("Should allow owner to transfer product", async function () {
         // Create first
-        await supplyChain.connect(manufacturer).createProduct(
-            "Test Product", "SN-123", "BATCH-1", 0, 100, 1000, 0, false, 0, 0
-        );
+        await supplyChain.connect(manufacturer).createProduct({
+            name: "Test Product",
+            serialNumber: "SN-123",
+            batchNumber: "BATCH-1",
+            category: 0,
+            quantity: 100,
+            unitCost: 1000,
+            expiryDate: 0,
+            requiresTemperatureControl: false,
+            minTemperature: 0,
+            maxTemperature: 0
+        });
 
         // Transfer
         await supplyChain.connect(manufacturer).transferProduct(1, distributor.address);

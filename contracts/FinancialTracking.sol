@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "./SupplyChain.sol";
 
@@ -34,7 +34,7 @@ contract FinancialTracking {
         address _to,
         uint256 _amount,
         string memory _transactionType
-    ) external {
+    ) public {
         transactionCount++;
         
         transactions[transactionCount] = TransactionLog({

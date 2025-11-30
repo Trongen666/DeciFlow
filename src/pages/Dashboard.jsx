@@ -4,7 +4,7 @@ import { useWeb3 } from '../contexts/Web3Context';
 import { useContract } from '../hooks/useContract';
 import HealthCheckPanel from '../components/HealthCheckPanel';
 
-const Dashboard = () => {
+const Dashboard = ({ Link }) => {
     const { account, connectWallet } = useWeb3();
     const { contract: supplyChain } = useContract('SupplyChain');
     const [productCount, setProductCount] = useState(0);
@@ -69,8 +69,17 @@ const Dashboard = () => {
                     <Card>
                         <Card.Header>Quick Actions</Card.Header>
                         <Card.Body className="d-grid gap-2">
-                            <Button variant="primary" href="/create">Create Product</Button>
-                            <Button variant="outline-primary" href="/products">View Inventory</Button>
+                                                        {Link ? (
+                                                                <>
+                                                                    <Link to="/create" className="btn btn-primary">Create Product</Link>
+                                                                    <Link to="/products" className="btn btn-outline-primary">View Inventory</Link>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <Button variant="primary" href="/create">Create Product</Button>
+                                                                    <Button variant="outline-primary" href="/products">View Inventory</Button>
+                                                                </>
+                                                            )}
                         </Card.Body>
                     </Card>
                 </Col>

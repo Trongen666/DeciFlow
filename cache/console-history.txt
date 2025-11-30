@@ -1,0 +1,40 @@
+console.log("🎉 ALL ROLES GRANTED TO:", myWallet);
+allet);
+await access.grantRole(RETAILER_ROLE, myW
+await access.grantRole(DISTRIBUTOR_ROLE, myWallet);
+await access.grantRole(MANUFACTURER_ROLE, myWallet);
+// 5. GRANT ALawait access.grantRole(ADMIN_ROLE, myWallet);
+const RETAILER_ROLE      = await access.RETAILER_ROLE();
+const DISTRIBUTOR_ROLE   = await access.DISTRIBUTOR_ROLE();
+const MANUFACTURER_ROLE  = await access.MANUFACTURER_ROLE();
+ ADMIN_ROLE         = await access.DEFAULT_ADMIN_ROLE();
+const
+// 4. Read correct role identifiers
+const
+// 3. Use your MetaMask account
+ait ethers.getContractAt("AccessControlManager", accessAddr);
+const access = aw
+// 2. Get contract instance
+console.log("AccessControl at:", accessAddr);
+const accessAddr = deployed.contracts.AccessControl;
+// 1. Get AccessControl address
+const deployed = require
+const deployed = require("./deployed.json");// Address of AccessControlManager from deployed.jsoncon/ Load contract instanceconst access = await ethers.getContractAt("AccessControlManager", accessAddr);// Your MetaMask accountconst myWallet = "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199";// Fetch role identifiersconst ADMIN_ROLE = await access.ADMINUFACTURER_ROLE();const DISTRIBUTOR_ROLE = await access.DISTRIBUTOR_ROLE();const RETAILER_ROLE = await access.RETAILER_ROLE();const AUDITOR_ROLE = await access.AUDITOR_ROLE();// Grant ALL rolesawait access.grantRole(ADMIN_ROLE, myWallet);await access.grantRole(MANUFACTURER_ROLE, myWallet);await access.grantRole(DISTRIBUTOR_ROLE, myWallet);await access.grantRole(RETAILER_ROLE, myWallet);await access.grantRole(AUDITOR_ROLE, myWallet);console.log("🎉 ALL ROLES GRANTED TO:", myWallet);// Load deployed addresses
+console.log("ALL ROLES GRANTED to", myWallet);
+await access.grantRole(AUDITOR_ROLE, myWallet);
+await access.grantRole(RETAILER_ROLE, myWallet);
+await access.grantRole(DISTRIBUTOR_ROLE, myWallet);
+ntRole(MANUFACTURER_ROLE, myWallet);
+await accessawait access.gra
+// Grant all roles
+const AUDITOR_ROLE      = await access.AUDITOR_ROLE();
+const RETAILER_ROLE     = await access.RETAILER_ROLE();
+const DISTRIBUTOR_ROLE  = await access.DISTRIBUTOR_ROLE();
+const MANUFACTURER_ROLE = await access.MANUFACTURER_ROLE();
+const ADMIN_ROLE        = await access.ADMIN_ROLE();
+// Get all roles
+const myWallet = "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199";
+// Your MetaMask address
+const access = await ethers.getContractAt("AccessControlManager", accessAddr);
+const
+const deployed = require("./deployed.json");

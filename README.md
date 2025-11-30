@@ -1,3 +1,41 @@
+# DeciFlow
+
+## Frontend / UI
+Run the dev server and open the app in your browser.
+
+Recommended quick local steps
+
+1. Start a local Hardhat node in a terminal:
+
+```powershell
+npm run node
+```
+
+2. In another terminal deploy contracts to the local node:
+
+```powershell
+npm run deploy
+```
+
+3. Start the frontend dev server:
+
+```powershell
+npm run dev
+```
+
+4. Open your browser and point MetaMask to the local network (usually http://127.0.0.1:8545), add an unlocked account and make sure the account is funded by the Hardhat node. Now connect in the UI.
+
+### Connecting your wallet and troubleshooting
+
+- The frontend expects a browser wallet (e.g. MetaMask) available at window.ethereum. If you see 'Please install MetaMask!', install MetaMask and configure it.
+- Make sure MetaMask is connected to the same local network where the contracts are deployed (the default project uses a local Hardhat network). The deployed contract addresses are written into `deployed.json` at the project root — confirm the addresses are there.
+- If you connect the wallet and still see "No on-chain contract loaded yet", open the browser console to check for errors and confirm MetaMask has an unlocked account. You can also use the small status information on the Home page which shows whether the SupplyChain and AccessControl contracts are loaded.
+
+### Role-based access and how it works
+
+- Roles are managed by the `AccessControlManager` contract. It provides bytes32 constants such as `MANUFACTURER_ROLE`, `DISTRIBUTOR_ROLE`, and `RETAILER_ROLE`.
+- Only accounts with `MANUFACTURER_ROLE` can call `createProduct` on the `SupplyChain` contract — the UI checks for this role and shows warnings when a non-manufacturer tries to create products.
+- The demo maps some known addresses to roles in `src/utils/users.js` so you can try different personas during development.
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
