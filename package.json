@@ -12,6 +12,7 @@
     "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
     "generate-data": "hardhat run scripts/generateDummyData.js --network localhost",
     "test": "hardhat test",
+    "test:ui": "vitest",
     "node": "hardhat node"
   },
   "dependencies": {
@@ -27,6 +28,8 @@
     "react-dom": "^18.2.0",
     "react-qr-code": "^2.0.12",
     "recharts": "^2.8.0"
+    ,
+    "dayjs": "^1.11.9"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.3",
@@ -43,6 +46,19 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "ethereum-waffle": "^4.0.10",
     "hardhat": "^2.27.1",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vitest": "^1.1.4",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "jsdom": "^21.1.0"
   }
+
+  ,
+  "vitest": {
+    "globals": true,
+    "environment": "jsdom",
+    "setupFiles": ["src/setupTests.js"]
+  }
+
+
 }

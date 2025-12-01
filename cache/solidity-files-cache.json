@@ -232,8 +232,8 @@
       ]
     },
     "D:\\crypto_project(DeCiFlow)\\DeciFlow\\contracts\\SupplyChain.sol": {
-      "lastModificationDate": 1764490411973,
-      "contentHash": "55276f973001ba77332eef0aa515d724",
+      "lastModificationDate": 1764509900719,
+      "contentHash": "6dbf9f07487f917c224da3c2f5749234",
       "sourceName": "contracts/SupplyChain.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -261,8 +261,6 @@
         }
       },
       "imports": [
-        "./AccessControl.sol",
-        "./AlertSystem.sol",
         "./IStructs.sol"
       ],
       "versionPragmas": [
@@ -273,8 +271,8 @@
       ]
     },
     "D:\\crypto_project(DeCiFlow)\\DeciFlow\\contracts\\AlertSystem.sol": {
-      "lastModificationDate": 1764490821551,
-      "contentHash": "6a2a8e72fa77566244333cb06ea21caf",
+      "lastModificationDate": 1764509930299,
+      "contentHash": "2009685177f79e21b9c989ae551a1613",
       "sourceName": "contracts/AlertSystem.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -302,7 +300,7 @@
         }
       },
       "imports": [
-        "./AccessControl.sol"
+        "./SupplyChain.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
@@ -349,8 +347,8 @@
       ]
     },
     "D:\\crypto_project(DeCiFlow)\\DeciFlow\\contracts\\InventoryManagement.sol": {
-      "lastModificationDate": 1764490198242,
-      "contentHash": "14318b0394018f051223535390ed2fce",
+      "lastModificationDate": 1764510131483,
+      "contentHash": "31a39cab031fa530b55584b8253e6da4",
       "sourceName": "contracts/InventoryManagement.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -389,8 +387,8 @@
       ]
     },
     "D:\\crypto_project(DeCiFlow)\\DeciFlow\\contracts\\FinancialTracking.sol": {
-      "lastModificationDate": 1764490829412,
-      "contentHash": "459e71a01c9a678292cc8d7fe69e432d",
+      "lastModificationDate": 1764508645614,
+      "contentHash": "6858417253ef192bbb74256fd1ee5568",
       "sourceName": "contracts/FinancialTracking.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -425,6 +423,83 @@
       ],
       "artifacts": [
         "FinancialTracking"
+      ]
+    },
+    "D:\\crypto_project(DeCiFlow)\\DeciFlow\\contracts\\LifecycleRegistry.sol": {
+      "lastModificationDate": 1764508788457,
+      "contentHash": "c38c6b2074761d4ee8aa4b029f862d8e",
+      "sourceName": "contracts/LifecycleRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IStructs.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ISupplyChainReader",
+        "LifecycleRegistry"
+      ]
+    },
+    "D:\\crypto_project(DeCiFlow)\\DeciFlow\\contracts\\SupplyChainSimple.sol": {
+      "lastModificationDate": 1764509636309,
+      "contentHash": "a3752049f2e24c72eb32ee670c27c82e",
+      "sourceName": "contracts/SupplyChainSimple.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "SupplyChainSimple"
       ]
     }
   }

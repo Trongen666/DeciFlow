@@ -32,6 +32,7 @@ async function startListener() {
 
     const supplyChain = getContract("SupplyChain", deployed.contracts.SupplyChain);
     const alertSystem = getContract("AlertSystem", deployed.contracts.AlertSystem);
+    const lifecycleRegistry = deployed.contracts.LifecycleRegistry ? getContract("LifecycleRegistry", deployed.contracts.LifecycleRegistry) : null;
 
     console.log("✅ Contracts loaded. Listening for events...");
 
@@ -51,6 +52,25 @@ async function startListener() {
         console.log(`\n🌡️ [EVENT] EnvironmentalData: #${productId} Temp: ${temp}°C Humidity: ${humidity}%`);
         productHandler.handleEnvironmentalData({ productId, temp, humidity, event });
     });
+
+    // Listen for lifecycle events emitted by SupplyChain (non-breaking addition)
+    supplyChain.on("ProductLifecycleStepRecorded", (id, stage, timestamp, actor, note, event) => {
+        console.log(`\n🔁 [EVENT] ProductLifecycleStepRecorded: #${id} stage=${stage} actor=${actor} note=${note}`);
+        productHandler.handleLifecycleStep({ productId: id.toString(), stage, name: '', timestamp, actor, note, source: 'SupplyChain' });
+    });
+
+    // If a LifecycleRegistry contract is present, listen for its events too
+    if (lifecycleRegistry) {
+        lifecycleRegistry.on("LifecycleStepAdded", (productId, stage, name, timestamp, actor, note, event) => {
+            console.log(`\n🔁 [EVENT] LifecycleStepAdded (registry): #${productId} ${name} (stage=${stage}) by ${actor}`);
+            productHandler.handleLifecycleStep({ productId: productId.toString(), stage, name, timestamp, actor, note, source: 'LifecycleRegistry' });
+        });
+
+        lifecycleRegistry.on("ProductStageAdvanced", (productId, oldStage, newStage, timestamp, actor, event) => {
+            console.log(`\n📈 [EVENT] ProductStageAdvanced: #${productId} ${oldStage} -> ${newStage} by ${actor}`);
+            productHandler.handleProductStageAdvanced({ productId: productId.toString(), oldStage, newStage, timestamp, actor, source: 'LifecycleRegistry' });
+        });
+    }
 
     // --- AlertSystem Events ---
 
